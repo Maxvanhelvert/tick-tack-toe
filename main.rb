@@ -2,6 +2,7 @@
 # and the board is displayed in between turns.
 # main.rb that handles gameplay
 # a board class ?what does it hold/do?
+# a player class that handles player setup
 
 # gameplay:
 # game gets started
