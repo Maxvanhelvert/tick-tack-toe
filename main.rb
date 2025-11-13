@@ -12,3 +12,20 @@
 # player 2 gets a turn
 # after every turn, check for a win condition.
 # if win condition, end game and declare winner.
+require './board'
+require './player'
+
+def play_game
+  board = Board.new
+  number_of_players
+  board.show
+end
+
+def number_of_players
+  puts 'New 2 player game'
+  players = []
+  players[0] = Player.new(1)
+  players[1] = Player.new(2)
+end
+
+play_game
