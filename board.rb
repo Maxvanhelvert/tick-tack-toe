@@ -1,8 +1,8 @@
 class Board
   @@empty_board = [
-    %w[1 2 3],
-    %w[4 5 6],
-    %w[7 8 9]
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
   ]
 
   def initialize
@@ -12,9 +12,9 @@ class Board
   def show
     puts
     @game_board.each_with_index do |row, row_index|
-      row.each do |cell|
+      row.each_with_index do |cell, cell_index|
         print " #{cell} "
-        print '|' unless cell % 3 == 0
+        print '|' unless (cell_index + 1) % 3 == 0
       end
       puts
       puts '-----------' unless (row_index + 1) % 3 == 0
@@ -24,7 +24,7 @@ class Board
 
   def player_turn(num, sym)
     puts "player #{num}'s turn. \nChoose your space:"
-    choice = gets.chomp
+    choice = gets.chomp.to_i
 
     # return unless valid(choice)
 
@@ -41,21 +41,24 @@ class Board
     puts 'good choice'
   end
 
-  def check_win
+  def check_win(player)
     win_conditions = [
-      [@game_board[0][0], @game_board[0][1], @game_board[0], [2]],
-      [@game_board[1][0], @game_board[1][1], @game_board[1], [2]],
-      [@game_board[2][0], @game_board[2][1], @game_board[2], [2]],
-      [@game_board[0][0], @game_board[1][0], @game_board[2], [0]],
-      [@game_board[0][1], @game_board[1][1], @game_board[2], [1]],
-      [@game_board[0][2], @game_board[1][2], @game_board[2], [1]],
-      [@game_board[0][0], @game_board[1][1], @game_board[2], [2]],
-      [@game_board[0][2], @game_board[1][1], @game_board[2], [0]]
+      [@game_board[0][0], @game_board[0][1], @game_board[0][2]],
+      [@game_board[1][0], @game_board[1][1], @game_board[1][2]],
+      [@game_board[2][0], @game_board[2][1], @game_board[2][2]],
+
+      [@game_board[0][0], @game_board[1][0], @game_board[2][0]],
+      [@game_board[0][1], @game_board[1][1], @game_board[2][1]],
+      [@game_board[0][2], @game_board[1][2], @game_board[2][2]],
+
+      [@game_board[0][0], @game_board[1][1], @game_board[2][2]],
+      [@game_board[0][2], @game_board[1][1], @game_board[2][0]]
     ]
 
     win_conditions.each do |condition|
-      if condition[0] == condition[1] && condition[0] == condition[2] && condition[0] != 'X' && condition[0] != 'O'
-        return condition[0]
+      if condition[0] == condition[1] && condition[0] == condition[2] && %w[X O].include?(condition[0])
+        puts "The winner is player #{player}"
+        return true
       end
 
       next
