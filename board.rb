@@ -20,6 +20,23 @@ class Board
     end
   end
 
+  def player_turn(num, sym)
+    puts "player #{num}'s turn. \nChoose your space:"
+    choice = gets.chomp
+    return unless valid(choice)
+
+    @game_board.each do |row|
+      row.detect do |cell|
+        @game_board[row][cell] = sym if cell == choice
+      end
+    end
+  end
+
+  def valid(choice)
+    current_board = @game_board.flatten
+    current_board.include?(choice)
+  end
+
   def check_win
     win_conditions = [
       [@game_board[0][0], @game_board[0][1], @game_board[0], [2]],

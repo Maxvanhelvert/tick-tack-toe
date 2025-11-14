@@ -17,15 +17,26 @@ require './player'
 
 def play_game
   board = Board.new
-  number_of_players
-  board.show
-end
-
-def number_of_players
   puts 'New 2 player game'
+  puts
+  board.show
+
   players = []
-  players[0] = Player.new(1)
-  players[1] = Player.new(2)
+  players[0] = Player.new(1, 'X')
+  players[1] = Player.new(2, 'O')
+
+  count = 0
+  current = 0
+
+  while count < 9
+    board.player_turn(players[current].number, players[current].symbol)
+    current = (current + 1) % 2
+    count += 1
+    board.show
+  end
+
+  puts "it's a tie"
+  nil
 end
 
 play_game
