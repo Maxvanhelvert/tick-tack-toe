@@ -1,8 +1,8 @@
 class Board
   @@empty_board = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
+    %w[1 2 3],
+    %w[4 5 6],
+    %w[7 8 9]
   ]
 
   def initialize
@@ -10,6 +10,7 @@ class Board
   end
 
   def show
+    puts
     @game_board.each_with_index do |row, row_index|
       row.each do |cell|
         print " #{cell} "
@@ -18,16 +19,18 @@ class Board
       puts
       puts '-----------' unless (row_index + 1) % 3 == 0
     end
+    puts
   end
 
   def player_turn(num, sym)
     puts "player #{num}'s turn. \nChoose your space:"
     choice = gets.chomp
-    return unless valid(choice)
 
-    @game_board.each do |row|
-      row.detect do |cell|
-        @game_board[row][cell] = sym if cell == choice
+    # return unless valid(choice)
+
+    @game_board.each_with_index do |row, r_index|
+      row.each_with_index do |cell, c_index|
+        @game_board[r_index][c_index] = sym if cell == choice
       end
     end
   end
@@ -35,6 +38,7 @@ class Board
   def valid(choice)
     current_board = @game_board.flatten
     current_board.include?(choice)
+    puts 'good choice'
   end
 
   def check_win
@@ -50,7 +54,9 @@ class Board
     ]
 
     win_conditions.each do |condition|
-      return condition[0] if condition[0] == condition[1] && condition[0] == condition[2] && !condition[0].is_number?
+      if condition[0] == condition[1] && condition[0] == condition[2] && condition[0] != 'X' && condition[0] != 'O'
+        return condition[0]
+      end
 
       next
     end
