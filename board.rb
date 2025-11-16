@@ -1,12 +1,12 @@
 class Board
-  @@empty_board = [
+  EMPTY_BOARD = [
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9]
   ]
 
   def initialize
-    @game_board = @@empty_board
+    @game_board = EMPTY_BOARD.map(&:dup)
   end
 
   def show

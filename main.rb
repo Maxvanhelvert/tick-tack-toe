@@ -29,4 +29,14 @@ def play_game
   nil
 end
 
-play_game
+loop do
+  play_game
+
+  puts
+  puts 'Play again? (y/n)'
+  answer = gets.chomp.downcase
+
+  break unless answer == 'y'
+end
+
+puts 'See you later!'
