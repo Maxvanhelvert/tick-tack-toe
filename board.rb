@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Board
   EMPTY_BOARD = [
     [1, 2, 3],
@@ -13,7 +15,13 @@ class Board
     puts
     @game_board.each_with_index do |row, row_index|
       row.each_with_index do |cell, cell_index|
-        print " #{cell} "
+        if cell == 'X'
+          print " #{cell} ".colorize(:blue)
+        elsif cell == 'O'
+          print " #{cell} ".colorize(:red)
+        else
+          print " #{cell} "
+        end
         print '|' unless (cell_index + 1) % 3 == 0
       end
       puts
