@@ -22,23 +22,9 @@ class Board
     puts
   end
 
-  def player_turn(num, sym)
-    puts "player #{num}'s turn. \nChoose your space:"
-    choice = gets.chomp.to_i
-
-    # return unless valid(choice)
-
-    @game_board.each_with_index do |row, r_index|
-      row.each_with_index do |cell, c_index|
-        @game_board[r_index][c_index] = sym if cell == choice
-      end
-    end
-  end
-
   def valid(choice)
     current_board = @game_board.flatten
     current_board.include?(choice)
-    puts 'good choice'
   end
 
   def check_win(player)
@@ -62,6 +48,25 @@ class Board
       end
 
       next
+    end
+  end
+
+  def player_turn(num, sym)
+    puts "player #{num}'s turn. \nChoose your space:"
+    choice = gets.chomp.to_i
+
+    unless valid(choice)
+      until valid(choice)
+        puts 'Choose a valid space'
+        choice = gets.chomp.to_i
+        break if valid(choice)
+      end
+    end
+
+    @game_board.each_with_index do |row, r_index|
+      row.each_with_index do |cell, c_index|
+        @game_board[r_index][c_index] = sym if cell == choice
+      end
     end
   end
 end
