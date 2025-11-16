@@ -51,7 +51,11 @@ class Board
 
     win_conditions.each do |condition|
       if condition[0] == condition[1] && condition[0] == condition[2] && %w[X O].include?(condition[0])
-        puts "The winner is player #{player}"
+        if player == 1
+          puts "The winner is player #{player}".colorize(:blue)
+        else
+          puts "The winner is player #{player}".colorize(:red)
+        end
         return true
       end
 
@@ -60,12 +64,19 @@ class Board
   end
 
   def player_turn(num, sym)
-    puts "player #{num}'s turn. \nChoose your space:"
+    if num == 1
+      puts "player #{num}'s turn.".colorize(:blue)
+    elsif num == 2
+      puts "player #{num}'s turn.".colorize(:red)
+    else
+      puts "player #{num}'s turn."
+    end
+    puts 'Choose your space:'
     choice = gets.chomp.to_i
 
     unless valid(choice)
       until valid(choice)
-        puts 'Choose a valid space'
+        puts 'Choose a valid space:'
         choice = gets.chomp.to_i
         break if valid(choice)
       end
